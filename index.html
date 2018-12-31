@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>The Chosen One</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="https://bootswatch.com/4/cosmo/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ 
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarColor01"
+        aria-controls="navbarColor01"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="https://www.https://linkedin.com/in/joséraffalli/"
+              >LinkedIn</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/jotaraffalli"
+              >GitHub</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              target="_blank"
+              href="https://github.com/jotaraffalli"
+              >Source code</a
+            >
+          </li>
+        </ul>
+        <button class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Info</button>
+      </div>
+    </nav>
+    <div class="container mt-4">
+      <div class="modal fade" id="exampleModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">App Info</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body"><p>Simple app I made using vanilla ES6 JavaScript. It uses ES6 modules such as classes, arrows, destructuring assignments, scoped and constant variables.</p></div>
+            <div class="modal-footer">
+              <a href="https://github/jotaraffalli/" class="btn btn-primary">
+                Vew source 
+              </a>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h1 class="display-4 text-center">
+        <i class="fas fa-hand-lizard text-primary"></i> The<span
+          class="text-primary"
+          >Chosen</span
+        >One
+      </h1>
+      <h5 class="display-5 text-center">
+        The app that helps you choose something randomly! <br />Well, sort of...
+      </h5>
+
+      <h3 class="display-5">Add</h3>
+      <form id="item-form">
+        <div class="form-group">
+          <label for="name">Item name</label>
+          <input type="text" id="name" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="rating"
+            >How much do you want this item to be Selected?</label
+          >
+          <input type="text" id="rating" class="form-control" />
+        </div>
+        <input
+          type="submit"
+          value="Add item"
+          class="btn btn-primary btn-block"
+        />
+      </form>
+      <h3 class="display-5 mt-3">Items</h3>
+      <table id="table" class="table table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Selected</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="item-list"></tbody>
+      </table>
+      <button
+        onclick="UI.choseItem()"
+        id="choose"
+        class="btn btn-success btn-block"
+      >
+        Choose an Item
+      </button>
+      <div class="my-1">
+        <button
+          onclick="UI.reset()"
+          id="reset"
+          class="btn btn-outline-warning btn-sm float-right"
+        >
+          Clear everything
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
