@@ -89,18 +89,20 @@ class UI {
     if (normalized.reduce((acum, current) => acum + current.weight, 0) === 0)
     {
       console.log('Normal Random performed');
-      itemSelectedRandomly = Math.floor(Math.random() * items.length); 
+      itemSelectedRandomly = Math.floor(Math.random()*items.length); 
+      console.log('Item Selected: ', items[itemSelectedRandomly]);
+      document.getElementById('item-list').rows[itemSelectedRandomly].classList.add("table-info");
     }
     else
     {
       console.log('Balanced Random performed'); 
       itemSelectedRandomly = await Controller.randomWeightedChoice(normalized);
+      console.log('Item Selected: ', items.find(({ name }) => name === itemSelectedRandomly));
+      const  itemListIndex =  items.findIndex((item) => item.name === itemSelectedRandomly);
+      document.getElementById('item-list').rows[itemListIndex].classList.add("table-info");
     }
      
 
-    console.log('Item Selected: ', items.find(({ name }) => name === itemSelectedRandomly));
-    let  itemListIndex =  items.findIndex((item) => item.name === itemSelectedRandomly);
-    document.getElementById('item-list').rows[itemListIndex].classList.add("table-info");
   }
 
   // Resets everything
