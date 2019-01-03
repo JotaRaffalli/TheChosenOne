@@ -7,20 +7,100 @@ class Item {
   }
 }
 
+class Controller {
+  // Returns the index of the array with more probability
+  static randomWeightedChoice(
+    table,
+    temperature = 50, // in [0,100], 50 is neutral
+    randomFunction = Math.random,
+    influence = 2 // seems fine, hard to tune
+  ) {
+    const T = (temperature - 50) / 50;
+    const nb = table.length;
+    if (!nb) {
+      return null;
+    }
+
+    const total = table.reduce(
+      (previousTotal, element) => previousTotal + element.weight,
+      0
+    );
+
+    const avg = total / nb;
+
+    // Compute amplified urgencies (depending on temperature)
+    const ur = {};
+    const urgencySum = table.reduce((previousSum, element) => {
+      const { id, weight } = element;
+      let urgency = weight + T * influence * (avg - weight);
+      if (urgency < 0) urgency = 0;
+      ur[id] = (ur[id] || 0) + urgency;
+      return previousSum + urgency;
+    }, 0);
+
+    let currentUrgency = 0;
+    const cumulatedUrgencies = {};
+    Object.keys(ur).forEach(id => {
+      currentUrgency += ur[id];
+      cumulatedUrgencies[id] = currentUrgency;
+    });
+
+    if (urgencySum < 1) return null; // No weight given
+    // Choose
+    const choice = randomFunction() * urgencySum;
+    const ids = Object.keys(cumulatedUrgencies);
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      const urgency = cumulatedUrgencies[id];
+      if (choice <= urgency) {
+        return id;
+      }
+    }
+  }
+}
+
 // UI Class: Handle UI Tasks
 class UI {
+  // UI creates List
   static displayItems() {
     const items = LocalStore.getItems();
 
     items.forEach(item => UI.addItemToList(item));
   }
-  // Selects an item from list
-  static choseItem() {
-    const items =  LocalStore.getItems();
-    const index = Math.floor(Math.random()*items.length);
-    
-    document.getElementById('item-list').rows[index].classList.add("table-info");
 
+  // Selects an item from list
+  static async choseItem() {
+    // Gets Items
+    const items = await LocalStore.getItems();
+    // Transform data to be tretaed
+    const normalized = items.map(({ rating, name }) => {
+      return { weight: rating, id: name };
+    });
+    console.log('Items Normalized to treat: ',normalized);
+
+    // Item that will be selected
+    let itemSelectedRandomly;
+
+    /**
+     * @function RandomSelection
+     * If it has no weights it uses a simple random
+     * Else, it delivers it to a balanced random function
+     */
+    if (normalized.reduce((acum, current) => acum + current.weight, 0) === 0)
+    {
+      console.log('Normal Random performed');
+      itemSelectedRandomly = Math.floor(Math.random() * items.length); 
+    }
+    else
+    {
+      console.log('Balanced Random performed'); 
+      itemSelectedRandomly = await Controller.randomWeightedChoice(normalized);
+    }
+     
+
+    console.log('Item Selected: ', items.find(({ name }) => name === itemSelectedRandomly));
+    let  itemListIndex =  items.findIndex((item) => item.name === itemSelectedRandomly);
+    document.getElementById('item-list').rows[itemListIndex].classList.add("table-info");
   }
 
   // Resets everything
@@ -32,10 +112,7 @@ class UI {
     const items = [];
 
     localStorage.setItem("items", JSON.stringify(items));
-
   }
-
- 
 
   static addItemToList({ name, rating = "none", selected = "" }) {
     const list = document.querySelector("#item-list");
@@ -45,7 +122,6 @@ class UI {
     row.innerHTML = `
         <td>${name}</td>
         <td>${rating}</td>
-        <td>${selected}</td>
         <td><button class="btn btn-danger btn-sm delete">Remove</button></td>
       `;
 
@@ -119,13 +195,13 @@ window.onload = function() {
 
       // Get form values
       const name = document.querySelector("#name").value;
-      const rating = document.querySelector("#rating").value;
+      const rating = Number(document.querySelector("#rating").value);
 
       console.log("Submited", name);
 
       // Validate
-      if (name === "") {
-        UI.showAlert("Please give the item a name", "danger");
+      if (name === "" || rating === "") {
+        UI.showAlert("Please give the item a name and a rating", "danger");
       } else {
         // Instatiate item
         const item = new Item(name, rating);
@@ -134,7 +210,11 @@ window.onload = function() {
         UI.addItemToList(item);
 
         // Add item to store
-        LocalStore.addItem(item);
+        try {
+          LocalStore.addItem(item);
+        } catch {
+          UI.showAlert("Error adding item!", "danger");
+        }
 
         // Show success message
         UI.showAlert("Item Added", "success");
@@ -153,7 +233,7 @@ window.onload = function() {
       // Remove item from store
       LocalStore.removeItem(
         e.target.parentElement.previousElementSibling.previousElementSibling
-          .previousElementSibling.textContent
+          .textContent
       );
 
       // Show success message

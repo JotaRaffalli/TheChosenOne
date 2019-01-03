@@ -79,7 +79,22 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body"><p>Simple app I made using vanilla ES6 JavaScript. It uses ES6 modules such as classes, arrows, destructuring assignments, scoped and constant variables.</p></div>
+            <div class="modal-body">
+              <p>Simple app I made using vanilla ES6 JavaScript. 
+                It uses ES6 modules such as classes, arrows, destructuring 
+                assignments, scoped and constant variables.</p>
+                <p>
+                  The app saves items in local storage to keep adding stuff if you decide to close it. 
+                  It allows you to randomly select an item based on the weights of the ratings given. 
+                  It is still pretty random, but I made it this way to help you decide between different 
+                  appealing alternatives with '<i>fate's help</i>'.
+                </p>
+                <p>
+                  If you wish to know more about the algorithm check this 
+                  <a href="https://everything2.com/title/Blackboard+temperature" target="_blank"> link</a>. 
+                  To see how the app is constructed with vanilla JS see the source code below. And yes, it uses bootstrap for styling.
+                </p>
+              </div>
             <div class="modal-footer">
               <a href="https://github.com/JotaRaffalli/TheChosenOne-PortfolioApp" class="btn btn-primary">
                 Vew source 
@@ -113,9 +128,18 @@
         </div>
         <div class="form-group">
           <label for="rating"
-            >How much do you want this item to be Selected?</label
-          >
-          <input type="text" id="rating" class="form-control" />
+            >How much do you want this item to be Selected? 
+            <br/>
+            <small class="font-weight-bold">Select 0 if its indifferent</small>
+          </label>
+          <select class="form-control" id="rating">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
         </div>
         <input
           type="submit"
@@ -129,7 +153,6 @@
           <tr>
             <th>Name</th>
             <th>Rating</th>
-            <th>Selected</th>
             <th></th>
           </tr>
         </thead>
@@ -142,7 +165,7 @@
       >
         Choose an Item
       </button>
-      <div class="my-1">
+      <div class="my-2">
         <button
           onclick="UI.reset()"
           id="reset"
@@ -154,7 +177,7 @@
     </div>
   </body>
   <footer>
-      <div class="bg-light">
+      <div class="bg-light mt-5">
           <footer class="container py-5">
             <div class="row">
               <div class="col-12 col-md">
