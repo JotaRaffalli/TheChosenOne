@@ -1,4 +1,4 @@
-# TheChosenOne-PortfolioApp
+# TheChosenOne
 **The Chosen One** is an app I made that uses [BAsCET](https://everything2.com/title/BAsCET) Artificial Intelligence principle architecture
 to choose an item from the list based on it's  temperature levels (weights), trying to imitate the actual human behavior of preference with some ***fate's help***.
 
