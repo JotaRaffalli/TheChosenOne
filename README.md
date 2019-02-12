@@ -1,4 +1,8 @@
 # TheChosenOne
+<img src="Screenshots/The%20Chosen%20One%20Safari.jpg"
+     alt="React Lyric Finder"
+     style="float: left; margin-right: 10px;" />
+     
 **The Chosen One** is an app I made that uses [BAsCET](https://everything2.com/title/BAsCET) Artificial Intelligence principle architecture
 to choose an item from the list based on it's  temperature levels (weights), trying to imitate the actual human behavior of preference with some ***fate's help***.
 
