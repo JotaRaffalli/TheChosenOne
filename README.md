@@ -5,7 +5,7 @@ to choose an item from the list based on it's  temperature levels (weights), try
 
 <img src="Screenshots/The%20Chosen%20One%20SafariS.jpg"
      alt="React Lyric Finder"
-     style="float: left />
+     style="float: left" />
 
 You can pretty much use it to make a decision between alternatives of any kind and select how much you want certain item to be chosen. It is still pretty random, so do not worry of biased selections.
 
